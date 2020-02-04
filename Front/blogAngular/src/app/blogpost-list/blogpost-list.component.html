@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div *ngFor="let blog of blogPostList$ | async">
+      <div class="col-sm-4">
+        <div class="card text-white bg-secondary" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title"><a class='link' [routerLink]="['theblog', blog.id]">{{ blog.title }}</a></h5>
+            <h6 class="card-subtitle mb-2 text-dark">{{ blog.subtitle }}</h6>
+            <p class="card-text">
+              {{ blog.content }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

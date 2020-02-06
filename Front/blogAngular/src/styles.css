@@ -1,8 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/dist/css/bootstrap.min.css";
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 .container {
   margin-left: 23%;
   margin-top: 8%;
   text-align: center;
+}
+button {
+  margin-left: -88%;
+}
+.caracCount {
+  margin-left: 90%;
+}
+.img {
+  margin-left: 11.5%;
 }

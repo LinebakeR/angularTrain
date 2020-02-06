@@ -4,22 +4,26 @@ import { Observable } from 'rxjs';
 import { BlogPost } from './model/blogpost';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
 export class BlogpostService {
-	url = 'http://localhost:3000';
+  url = 'http://localhost:3000';
 
-	constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
-	getAllPosts(): Observable<BlogPost[]> {
-		return this.httpClient.get<BlogPost[]>(`${this.url}/allblogs`);
-	}
+  getAllPosts(): Observable<BlogPost[]> {
+    return this.httpClient.get<BlogPost[]>(`${this.url}/allblogs`);
+  }
 
-	getPost(id): Observable<BlogPost> {
-		return this.httpClient.get<BlogPost>(`${this.url}/blog/${id}`);
-	}
+  getPost(id): Observable<BlogPost> {
+    return this.httpClient.get<BlogPost>(`${this.url}/blog/${id}`);
+  }
 
-	deletePost(id) {
-		return this.httpClient.delete(`${this.url}/admin/${id}`);
-	}
+  deletePost(id) {
+    return this.httpClient.delete(`${this.url}/admin/${id}`);
+  }
+
+  createBlogPost(post: BlogPost) {
+    return this.httpClient.post<BlogPost>(`${this.url}/create`, post);
+  }
 }

@@ -6,7 +6,7 @@ const bodyparser = require("body-parser");
 
 app.set("port", process.env.port || 3000);
 app.listen(app.get("port"), () => {
-  console.log(`Connexion on port ${app.get("port")}`);
+  console.log(`Connected on port ${app.get("port")}`);
 });
 app.use(cors());
 app.use(bodyparser.json());

@@ -26,4 +26,14 @@ export class BlogpostService {
   createBlogPost(post: BlogPost) {
     return this.httpClient.post<BlogPost>(`${this.url}/create`, post);
   }
+
+  uploadImage(fileToUpload: File) {
+    let formData = new FormData();
+    formData.append('images', fileToUpload, fileToUpload.name);
+    return this.httpClient.post(`${this.url}/images`, formData);
+  }
+
+  // catchImg(img): Observable<BlogPost[]> {
+  //   return this.httpClient.get<BlogPost[]>(`${this.url}/uploadImg/${img}`);
+  // }
 }

@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'theblog/:id', component: BlogpostComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'create', component: BlogpostCreationComponent },
+  { path: 'uploadImg/:img', component: BlogpostListComponent },
   { path: '**', component: ErrorPageComponent },
 ];
 

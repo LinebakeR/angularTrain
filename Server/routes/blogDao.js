@@ -1,10 +1,6 @@
 const knex = require('../bbd');
 const blogProps = require('./blogProps');
 
-function addImg(img) {
-  return knex(blogProps.tableName).insert(img);
-}
-
 function getAllblogs() {
   return knex(blogProps.tableName).select('*');
 }
@@ -16,7 +12,12 @@ function getBlog(id) {
     .where(blogProps.id, id);
 }
 
-function postBlog(data) {
+function postBlog(data, img) {
+  if (img) {
+    return knex(blogProps.tableName)
+      .insert(img)
+      .where(blogProps.images, img);
+  }
   return knex(blogProps.tableName).insert(data);
 }
 
@@ -26,7 +27,7 @@ function deletePost(id) {
     .where(blogProps.id, id)
     .del()
     .then(result => {
-      console.log('Post with id : ' + result + 'is deleted ...');
+      console.log('Post with id  : ' + id + ' is deleted ...');
     })
     .catch(err => console.log('error when deleting', err));
 }
@@ -46,5 +47,4 @@ module.exports = {
   postBlog,
   deletePost,
   addPost,
-  addImg,
 };

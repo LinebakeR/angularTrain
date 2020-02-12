@@ -11,13 +11,9 @@ import { Router, RouterLink } from '@angular/router';
 export class BlogpostCreationComponent implements OnInit {
   creationForm: FormGroup;
   fileToUpload: File = null;
+  uploadPath: string = null;
 
-  constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private blogPostService: BlogpostService,
-    private el: ElementRef,
-  ) {}
+  constructor(private router: Router, private fb: FormBuilder, private blogPostService: BlogpostService) {}
 
   ngOnInit() {
     this.createForm();
@@ -34,19 +30,31 @@ export class BlogpostCreationComponent implements OnInit {
 
   createBlog() {
     if (this.creationForm.valid) {
+      if (this.fileToUpload) {
+        this.blogPostService.uploadImage(this.fileToUpload).subscribe(
+          data => console.log('image', data),
+          error => console.log('error', error),
+        );
+      }
       console.log('formGrp', this.creationForm);
       this.blogPostService.createBlogPost(this.creationForm.value).subscribe(
-        data => this.handleSuccess(data),
+        data => console.log('DATA posted', data),
         error => this.handleError(error),
       );
       if (this.creationForm.value) {
         this.router.navigate(['']);
       }
+    } else if (this.creationForm.valid) {
+      this.blogPostService.createBlogPost(this.creationForm.value).subscribe(
+        data => (this.fileToUpload = null),
+        error => this.handleError(error),
+      );
     }
   }
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item[0];
+  handleFileInput(event) {
+    this.fileToUpload = event.target.files[0];
+    console.log('uploaded file', this.fileToUpload);
   }
 
   handleSuccess(data) {

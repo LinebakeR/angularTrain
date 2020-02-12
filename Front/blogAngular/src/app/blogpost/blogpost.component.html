@@ -1,16 +1,13 @@
 <ng-container *ngIf="blogpost$ | async as bp; else loading">
-  <div
-  class="card text-white bg-secondary mb-3" 
-  style="max-width: 18rem;"
-  >
-  <div class="card-header">{{ bp[0].title }}</div>
-  <div class="card-body">
-    <h5 class="card-title"> {{ bp[0].subtitle }}</h5>
-    <p class="card-text">
-      {{ bp[0].content }}
-    </p>
+  <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-header">{{ bp[0].title }}</div>
+    <div class="card-body">
+      <h5 class="card-title">{{ bp[0].subtitle }}</h5>
+      <p class="card-text">
+        {{ bp[0].content }}
+      </p>
+    </div>
   </div>
-</div>
 </ng-container>
 
 <ng-template #loading>Loading post ...</ng-template>

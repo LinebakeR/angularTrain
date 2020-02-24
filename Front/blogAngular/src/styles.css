@@ -15,3 +15,17 @@ button {
 .img {
   margin-left: -73.5%;
 }
+
+body,
+head,
+html,
+.navbar {
+  max-width: 100%;
+  background-color: rgb(55, 56, 54);
+}
+
+.nav-item,
+.navbar-brand {
+  color: white;
+  text-decoration: none;
+}

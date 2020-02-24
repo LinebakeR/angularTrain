@@ -1,13 +1,14 @@
-<div class="card-deck">
-  <div class="card" *ngFor="let blog of blogPostList$ | async">
-    <img class="card-img-top" [src]="imagePath + blog.images" alt="No image uploaded" />
+<div class="card-deck border-dark" *ngIf="isImg">
+  <div class="card text-white bg-secondary mb-3" *ngFor="let blog of blogPostList$ | async">
+    <img class="card-img-top" onerror="this.style.display='none'" [src]="imagePath + blog.images" />
     <div class="card-header">
       <h4>
         <a class="link" [routerLink]="['theblog', blog.id]">{{ blog.title }}</a>
       </h4>
     </div>
-    <div class="card-body">
+    <div class="card-body text-dark">
       <h5 class="card-title">{{ blog.subtitle }}</h5>
+      <hr />
       <p class="card-text">{{ blog.content }}</p>
     </div>
   </div>

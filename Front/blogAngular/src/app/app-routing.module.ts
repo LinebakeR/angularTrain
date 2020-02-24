@@ -5,13 +5,14 @@ import { BlogpostComponent } from './blogpost/blogpost.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { AdminComponent } from './admin/admin.component';
 import { BlogpostCreationComponent } from './blogpost-creation/blogpost-creation.component';
+import { EditBlogComponent } from './edit-blog/edit-blog.component';
 
 const routes: Routes = [
   { path: '', component: BlogpostListComponent },
   { path: 'theblog/:id', component: BlogpostComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'create', component: BlogpostCreationComponent },
-  { path: 'uploadImg/:img', component: BlogpostListComponent },
+  { path: 'theblog/:id/edit', component: EditBlogComponent },
   { path: '**', component: ErrorPageComponent },
 ];
 

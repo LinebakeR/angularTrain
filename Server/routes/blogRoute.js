@@ -43,8 +43,6 @@ router.get('/upImg/:img', async (req, res) => {
     const img = req.params.img;
     const upImg = await blogDao.getImg(img);
     res.status(200).json(console.log('upIMG', upImg));
-    console.log('UPIMG FROM BACK', upImg);
-    console.log('IMG FROM BACK', img);
   } catch (err) {
     console.log('error when try to load image', err);
   }
@@ -53,7 +51,6 @@ router.get('/upImg/:img', async (req, res) => {
 router.get('/allblogs', async (req, res) => {
   try {
     const blogs = await blogDao.getAllblogs();
-    console.log('blogs', blogs);
     res.status(200).json(blogs);
   } catch (err) {
     res.status(500).json({ msg: 'Error when get all blogs' });
@@ -63,9 +60,7 @@ router.get('/allblogs', async (req, res) => {
 router.get('/blog/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    console.log('id', id);
     const blog = await blogDao.getBlog(id);
-    console.log('BLOG', blog);
     res.status(200).json(blog);
   } catch (err) {
     console.log('error when trying to catch blog', err);
@@ -77,10 +72,10 @@ router.post('/create', async (req, res) => {
   try {
     const data = req.body;
     data.images = imgUpload;
-    console.log('DATA', data);
     blogDao.addPost(data);
+    console.log('DATA posted', data);
     res.status(200).json(data);
-    if (data.images.length <= 0) {
+    if (data.images.length === '') {
       delete data.images;
       delete imgUpload;
     }
@@ -92,15 +87,31 @@ router.post('/create', async (req, res) => {
   }
 });
 
+router.put('/blog/:id', upload.single('images'), async (req, res) => {
+  try {
+    const data = req.body;
+    const id = req.params.id;
+    if (data.images.length === '') {
+      delete data.images;
+      delete imgUpload;
+    }
+    console.log('id', id);
+    console.log('DATA UPDATED', data);
+    const edit = await blogDao.editBlog(id, data);
+    res.status(200).json({ msg: 'update successful', edit });
+  } catch (err) {
+    console.log('error when try to edit', err);
+  }
+});
+
 router.delete('/admin/:id', async (req, res) => {
   const id = req.params.id;
-  console.log('ID', id);
   try {
     const deletingData = await blogDao.deletePost(id);
     console.log('DELETING post id: ', id);
     res.status(200).json({ msg: 'Data deleted ...', deletingData });
   } catch (err) {
-    console.log('Error when attempt to delete data');
+    console.log('Error when attempt to delete data', err);
   }
 });
 

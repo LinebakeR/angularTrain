@@ -10,6 +10,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { AdminComponent } from './admin/admin.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BlogpostCreationComponent } from './blogpost-creation/blogpost-creation.component';
+import { EditBlogComponent } from './edit-blog/edit-blog.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { BlogpostCreationComponent } from './blogpost-creation/blogpost-creation
     ErrorPageComponent,
     AdminComponent,
     BlogpostCreationComponent,
+    EditBlogComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   providers: [],

@@ -27,13 +27,13 @@ export class BlogpostService {
     return this.httpClient.post<BlogPost>(`${this.url}/create`, post);
   }
 
+  editBlogPost(id, data) {
+    return this.httpClient.put(`${this.url}/blog/${id}`, data);
+  }
+
   uploadImage(fileToUpload: File) {
     let formData = new FormData();
     formData.append('images', fileToUpload, fileToUpload.name);
     return this.httpClient.post(`${this.url}/images`, formData);
   }
-
-  // catchImg(img): Observable<BlogPost[]> {
-  //   return this.httpClient.get<BlogPost[]>(`${this.url}/uploadImg/${img}`);
-  // }
 }

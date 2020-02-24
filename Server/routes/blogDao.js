@@ -6,10 +6,20 @@ function getAllblogs() {
 }
 
 function getBlog(id) {
-  console.log('blogprops', id);
   return knex(blogProps.tableName)
     .select('*')
     .where(blogProps.id, id);
+}
+
+function editBlog(id, data) {
+  return knex(blogProps.tableName)
+    .select('*')
+    .where(blogProps.id, id)
+    .update(data)
+    .then(data => data)
+    .catch(error => {
+      console.log('error edit', error);
+    });
 }
 
 function postBlog(data, img) {
@@ -47,4 +57,5 @@ module.exports = {
   postBlog,
   deletePost,
   addPost,
+  editBlog,
 };

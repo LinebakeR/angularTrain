@@ -1,16 +1,27 @@
 .link {
   color: black;
+  font-style: italic;
+  text-decoration: none;
 }
 .card-deck {
   margin-top: 3%;
   text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  max-width: 200%;
+  width: 119rem;
+  height: 50rem;
+}
+.card-text {
+  margin-top: 20%;
 }
 
 .card-body {
   height: 50%;
 }
 .card-img-top {
-  width: 455px;
-  height: 280px;
+  max-height: 303px;
+  max-width: 100%;
   background-size: cover;
 }

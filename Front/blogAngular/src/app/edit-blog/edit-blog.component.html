@@ -1,57 +1,32 @@
 <div class="container" *ngIf="blogpost as blog">
   <form [formGroup]="editForm" (submit)="updateBlog()">
     <div class="form-group">
-      <label for="exampleInputTitle1"><h6>Title</h6></label>
-      <input
-        maxlength="80"
-        type="text"
-        class="form-control"
-        id="title"
-        aria-describedby="titleHelp"
-        formControlName="title"
-        placeholder="Title"
-        required
-        [value]="blog[0].title"
-      />
+      <label for="exampleInputTitle1">
+        <h6>Title</h6>
+      </label>
+      <input maxlength="80" type="text" class="form-control" id="title" aria-describedby="titleHelp"
+        formControlName="title" placeholder="Title" required [(ngModel)]="blog[0].title" />
     </div>
     <div class="form-group">
-      <label for="inputSubtitle"><h6>Subtitle</h6></label>
-      <input
-        maxlength="45"
-        type="text"
-        class="form-control"
-        formControlName="subtitle"
-        id="inputSubtitle"
-        placeholder="Subtitle"
-        required
-        [value]="blog[0].subtitle"
-      />
+      <label for="inputSubtitle">
+        <h6>Subtitle</h6>
+      </label>
+      <input maxlength="45" type="text" class="form-control" formControlName="subtitle" id="inputSubtitle"
+        placeholder="Subtitle" required [(ngModel)]="blog[0].subtitle" />
     </div>
     <div class="form-group">
-      <label for="exampleFormControlTextarea1"><h6>Content</h6></label>
-      <textarea
-        maxlength="1000"
-        class="form-control"
-        id="exampleFormControlTextarea1"
-        rows="3"
-        placeholder="Your article ..."
-        formControlName="content"
-        [value]="blog[0].content"
-        required
-      ></textarea>
+      <label for="exampleFormControlTextarea1">
+        <h6>Content</h6>
+      </label>
+      <textarea maxlength="1000" class="form-control" id="exampleFormControlTextarea1" rows="3"
+        placeholder="Your article ..." formControlName="content" [(ngModel)]="blog[0].content" required></textarea>
       <div class="caracCount">
         {{ 1000 - blog[0].content.length }}
       </div>
       <div class="img">
         <label for="images"></label>
-        <input
-          type="file"
-          name="images"
-          id="images"
-          formControlName="images"
-          [value]="blog[0].images"
-          (change)="handleFileUpdate($event)"
-        />
+        <input type="file" name="images" id="images" formControlName="images" (change)="handleFileUpdate($event)"
+          [src]='imgMounted' />
       </div>
     </div>
     <button class="btn btn-success" type="submit">Update my article</button>

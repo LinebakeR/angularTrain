@@ -1,40 +1,25 @@
 <div class="container">
   <form [formGroup]="creationForm" (submit)="createBlog()">
     <div class="form-group">
-      <label for="exampleInputTitle1"><h6>Title</h6></label>
-      <input
-        maxlength="80"
-        type="text"
-        class="form-control"
-        id="title"
-        aria-describedby="titleHelp"
-        formControlName="title"
-        placeholder="Title"
-        required
-      />
+      <label for="exampleInputTitle1">
+        <h6>Title</h6>
+      </label>
+      <input maxlength="80" type="text" class="form-control" id="title" aria-describedby="titleHelp"
+        formControlName="title" placeholder="Title" required />
     </div>
     <div class="form-group">
-      <label for="inputSubtitle"><h6>Subtitle</h6></label>
-      <input
-        maxlength="45"
-        type="text"
-        class="form-control"
-        formControlName="subTitle"
-        id="inputSubtitle"
-        placeholder="Subtitle"
-      />
+      <label for="inputSubtitle">
+        <h6>Subtitle</h6>
+      </label>
+      <input maxlength="45" type="text" class="form-control" formControlName="subTitle" id="inputSubtitle"
+        placeholder="Subtitle" />
     </div>
     <div class="form-group">
-      <label for="exampleFormControlTextarea1"><h6>Example textarea</h6></label>
-      <textarea
-        maxlength="1000"
-        class="form-control"
-        id="exampleFormControlTextarea1"
-        rows="3"
-        placeholder="Your article ..."
-        formControlName="content"
-        required
-      ></textarea>
+      <label for="exampleFormControlTextarea1">
+        <h6>Example textarea</h6>
+      </label>
+      <textarea maxlength="1000" class="form-control" id="exampleFormControlTextarea1" rows="3"
+        placeholder="Your article ..." formControlName="content" required></textarea>
       <div class="caracCount">
         {{ 1000 - creationForm.value.content.length }}
       </div>

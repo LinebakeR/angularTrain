@@ -17,7 +17,7 @@ export class BlogpostListComponent implements OnInit {
   imagePath = environment.imagePath;
   isImg = false;
 
-  constructor(private blogpostService: BlogpostService) {}
+  constructor(private blogpostService: BlogpostService) { }
 
   ngOnInit() {
     this.blogPostList$ = this.blogpostService.getAllPosts();
@@ -27,12 +27,11 @@ export class BlogpostListComponent implements OnInit {
   getAllPost() {
     this.blogPostList$ = this.blogpostService.getAllPosts();
     this.blogPostList$.subscribe(data => {
+      console.log('DATA', data)
       for (let img of data) {
-        // console.log('IMG', img.images);
         if (img.images) {
           this.isImg = true;
-          // console.log('img.images', img.images);
-          // console.log('isImg', this.isImg);
+
         } else {
           delete img.images;
         }

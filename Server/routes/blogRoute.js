@@ -8,9 +8,7 @@ const path = require('path');
 let imgUpload = '';
 //UPLOAD IMAGE
 const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, './uploads');
-  },
+  destination: './uploads',
   filename: (req, file, callback) => {
     imgUpload = file.originalname.toString('hex');
     console.log('imgUpload: ', imgUpload);
@@ -23,15 +21,17 @@ const upload = multer({ storage: storage });
 router.post('/images', upload.single('images'), async (req, res) => {
   try {
     const img = req.file;
-    img.filename = imgUpload;
-    console.log('FILE', img);
     if (!img) {
+      img.filename = imgUpload;
+      imgUpload === null;
       delete img;
     }
+    img.filename = imgUpload;
+    console.log('FILE', img);
     if (!img.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
       return res.status(400).json({ msg: 'Only images files please' });
     }
-    await res.status(201).send({ filename: img.filename, file: img, msg: 'picture uploaded' });
+    await res.status(201).send({ filename: img.filename, file: img });
   } catch (err) {
     console.log('error', err);
     res.status(500).json({ msg: 'Error when posted new image' });
@@ -71,11 +71,16 @@ router.get('/blog/:id', async (req, res) => {
 router.post('/create', async (req, res) => {
   try {
     const data = req.body;
-    data.images = imgUpload;
-    blogDao.addPost(data);
-    console.log('DATA posted', data);
-    res.status(200).json(data);
-    if (data.images.length === '') {
+    if (data.images) {
+      data.images = imgUpload;
+      blogDao.addPost(data);
+      console.log('DATA posted', data);
+      res.status(200).json(data);
+    }
+    else {
+      blogDao.addPost(data);
+      console.log('DATA posted', data);
+      res.status(200).json(data);
       delete data.images;
       delete imgUpload;
     }
@@ -89,12 +94,11 @@ router.post('/create', async (req, res) => {
 
 router.put('/blog/:id', upload.single('images'), async (req, res) => {
   try {
+    console.log('IMGUPLOAD', imgUpload)
     const data = req.body;
+    data.images = imgUpload;
     const id = req.params.id;
-    if (data.images.length === '') {
-      delete data.images;
-      delete imgUpload;
-    }
+
     console.log('id', id);
     console.log('DATA UPDATED', data);
     const edit = await blogDao.editBlog(id, data);

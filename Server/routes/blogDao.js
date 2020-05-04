@@ -16,7 +16,7 @@ function editBlog(id, data) {
     .select('*')
     .where(blogProps.id, id)
     .update(data)
-    .then(data => data)
+    .then(data => data, console.log('DATA FROM DAO', data))
     .catch(error => {
       console.log('error edit', error);
     });

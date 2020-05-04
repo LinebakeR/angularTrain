@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BlogPost } from '../model/blogpost';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-edit-blog',
   templateUrl: './edit-blog.component.html',
@@ -15,27 +16,30 @@ export class EditBlogComponent implements OnInit {
   blogPostId: String;
   blogpost: BlogPost;
   updatefileToUpload: File = null;
+  isChange = false;
+  imgMounted: File = null;
+
 
   constructor(
     private fb: FormBuilder,
     private blogPostService: BlogpostService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.blogPostId = this.activatedRoute.snapshot.paramMap.get('id');
     this.blogPostService.getPost(this.blogPostId).subscribe(
       data => {
-        if (data[0].content) {
-          this.blogpost = data;
-          console.log('data edit', data);
-          console.log('this.blogpost', this.blogpost);
-        }
+        this.blogpost = data;
+        console.log('data can be edit', this.blogpost[0]);
       },
       error => console.log('Error', error),
     );
     this.createForm();
+    console.log('IMAGE: ', this.updatefileToUpload)
+    console.log('isCHange?: ', this.isChange)
+    console.log('imgMounted?: ', this.imgMounted)
   }
 
   createForm() {
@@ -49,39 +53,38 @@ export class EditBlogComponent implements OnInit {
 
   updateBlog() {
     console.log('first blogpost', this.blogpost[0].content);
+    console.log('blogpost', this.blogpost[0]);
 
-    if (this.editForm) {
+    if (this.editForm.valid) {
       if (this.blogpost[0] !== '') {
-        console.log('editForm.value', this.editForm.value.title);
-        if (this.updatefileToUpload) {
+        if (this.isChange) {
           this.blogPostService.uploadImage(this.updatefileToUpload).subscribe(
             data => console.log('imgUpload', data),
             error => console.log('error when update img', error),
           );
         }
         this.blogPostService.editBlogPost(this.blogPostId, this.editForm.value).subscribe(
-          data => console.log('data uploaded', data),
+          data => console.log('data uploaded with no img change', data),
           error => console.log('error when uploaded data', error),
         );
+
         if (this.editForm.value) {
           this.router.navigate(['']);
         }
       }
-    } else if (this.editForm) {
-      this.blogPostService.editBlogPost(this.blogPostId, this.editForm.value).subscribe(
-        data => (this.updatefileToUpload = null),
-        error => console.log('error2', error),
-      );
-      this.router.navigate(['']);
     }
   }
 
   handleFileUpdate(event) {
+    this.updatefileToUpload = event.target.files[0];
     if (this.updatefileToUpload) {
-      this.updatefileToUpload = event.target.files[0];
-    } else {
-      this.updatefileToUpload = null;
+      this.isChange = true;
+      console.log('uploaded file', this.updatefileToUpload);
+      console.log('uploaded file', this.isChange);
     }
-    console.log('uploaded file', this.updatefileToUpload);
+    if (!this.isChange) {
+      this.updatefileToUpload === this.blogpost[0].images
+    }
+
   }
 }

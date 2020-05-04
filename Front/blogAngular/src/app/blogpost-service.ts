@@ -9,7 +9,7 @@ import { BlogPost } from './model/blogpost';
 export class BlogpostService {
   url = 'http://localhost:3000';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getAllPosts(): Observable<BlogPost[]> {
     return this.httpClient.get<BlogPost[]>(`${this.url}/allblogs`);

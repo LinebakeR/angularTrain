@@ -2,7 +2,7 @@ const knex = require("knex")({
   client: "mysql",
   connection: {
     host: "localhost",
-    user: "root",
+    user: "alexw",
     password: "root",
     database: "blogDB"
       

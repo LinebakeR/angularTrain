@@ -22,13 +22,12 @@ function editBlog(id, data) {
     });
 }
 
-function postBlog(data, img) {
+function addImg(img) {
   if (img) {
     return knex(blogProps.tableName)
       .insert(img)
       .where(blogProps.images, img);
   }
-  return knex(blogProps.tableName).insert(data);
 }
 
 function deletePost(id) {
@@ -54,7 +53,7 @@ function addPost(data) {
 module.exports = {
   getAllblogs,
   getBlog,
-  postBlog,
+  addImg,
   deletePost,
   addPost,
   editBlog,

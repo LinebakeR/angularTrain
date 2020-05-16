@@ -57,10 +57,8 @@ export class BlogpostCreationComponent implements OnInit {
   }
 
   handleFileInput(event) {
+    if (event.target.files[0]) { }
     this.fileToUpload = event.target.files[0];
-    if (this.fileToUpload === null) {
-      this.fileToUpload === null
-    }
     console.log('uploaded file', this.fileToUpload);
   }
 

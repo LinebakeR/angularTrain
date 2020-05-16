@@ -21,12 +21,6 @@ const upload = multer({ storage: storage });
 router.post('/images', upload.single('images'), async (req, res) => {
   try {
     const img = req.file;
-    if (!img) {
-      img.filename = imgUpload;
-      imgUpload === null;
-      delete img;
-    }
-    img.filename = imgUpload;
     console.log('FILE', img);
     if (!img.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
       return res.status(400).json({ msg: 'Only images files please' });
@@ -35,16 +29,6 @@ router.post('/images', upload.single('images'), async (req, res) => {
   } catch (err) {
     console.log('error', err);
     res.status(500).json({ msg: 'Error when posted new image' });
-  }
-});
-
-router.get('/upImg/:img', async (req, res) => {
-  try {
-    const img = req.params.img;
-    const upImg = await blogDao.getImg(img);
-    res.status(200).json(console.log('upIMG', upImg));
-  } catch (err) {
-    console.log('error when try to load image', err);
   }
 });
 
@@ -68,22 +52,17 @@ router.get('/blog/:id', async (req, res) => {
   }
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create', upload.single('images'), async (req, res) => {
   try {
     const data = req.body;
-    if (data.images) {
-      data.images = imgUpload;
-      blogDao.addPost(data);
-      console.log('DATA posted', data);
-      res.status(200).json(data);
-    }
-    else {
-      blogDao.addPost(data);
-      console.log('DATA posted', data);
-      res.status(200).json(data);
-      delete data.images;
-      delete imgUpload;
-    }
+    data.images = imgUpload
+    const img = req.file
+    console.log('DATA.IMAGE', data.images)
+    blogDao.addPost(data);
+    res.status(201).send({ filename: img.filename, file: img });
+    console.log('DATA posted', data);
+    console.log('IMG posted', img);
+    res.status(200).json(data);
     if (!data) {
       console.log('No data to add or missing data ...');
     }
@@ -94,9 +73,8 @@ router.post('/create', async (req, res) => {
 
 router.put('/blog/:id', upload.single('images'), async (req, res) => {
   try {
-    console.log('IMGUPLOAD', imgUpload)
     const data = req.body;
-    data.images = imgUpload;
+    data.images = req.file;
     const id = req.params.id;
 
     console.log('id', id);
